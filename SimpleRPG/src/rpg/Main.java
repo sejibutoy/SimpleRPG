@@ -42,17 +42,43 @@ public class Main {
             System.out.println("Enemy Health: " + enemy.getHealth());
 
             System.out.println("1. Attack");
+            if (player instanceof Healer) {
+                System.out.println("2. Heal");
+            }
+
             int action = input.nextInt();
 
             if (action == 1) {
+
                 player.attack();
-                enemy.setHealth(enemy.getHealth() - player.getAttackPower());
+
+                int damage = (int)(Math.random() * player.getAttackPower()) + 1;
+
+                enemy.setHealth(enemy.getHealth() - damage);
+
+                System.out.println("You dealt " + damage + " damage!");
+            }
+
+            else if (action == 2 && player instanceof Healer) {
+
+                ((Healer) player).heal();
+
+                player.setHealth(player.getHealth() + 15);
+
+                System.out.println("You recovered 15 health!");
             }
 
             if (enemy.getHealth() > 0) {
-                System.out.println("Enemy attacks!");
+
+                System.out.println("\nEnemy attacks!");
+
                 enemy.attack();
-                player.setHealth(player.getHealth() - enemy.getAttackPower());
+
+                int enemyDamage = (int)(Math.random() * enemy.getAttackPower()) + 1;
+
+                player.setHealth(player.getHealth() - enemyDamage);
+
+                System.out.println("Enemy dealt " + enemyDamage + " damage!");
             }
         }
 
